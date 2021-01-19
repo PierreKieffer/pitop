@@ -31,7 +31,7 @@ func App() {
 	g1 := widgets.NewGauge()
 	g1.Title = " CPU0 "
 	g1.Percent = int(status.CPULoad.CPU0)
-	g1.SetRect(0, 5, 50, 8)
+	g1.SetRect(0, 0, 50, 3)
 	g1.BarColor = GetColorPercent(status.CPULoad.CPU0)
 	g1.BorderStyle.Fg = termui.ColorWhite
 	g1.LabelStyle = termui.NewStyle(termui.ColorWhite)
@@ -39,7 +39,7 @@ func App() {
 	g2 := widgets.NewGauge()
 	g2.Title = " CPU1 "
 	g2.Percent = int(status.CPULoad.CPU1)
-	g2.SetRect(0, 8, 50, 11)
+	g2.SetRect(0, 3, 50, 6)
 	g2.BarColor = GetColorPercent(status.CPULoad.CPU1)
 	g2.BorderStyle.Fg = termui.ColorWhite
 	g2.LabelStyle = termui.NewStyle(termui.ColorWhite)
@@ -47,7 +47,7 @@ func App() {
 	g3 := widgets.NewGauge()
 	g3.Title = " CPU2 "
 	g3.Percent = int(status.CPULoad.CPU2)
-	g3.SetRect(0, 11, 50, 14)
+	g3.SetRect(0, 6, 50, 9)
 	g3.BarColor = GetColorPercent(status.CPULoad.CPU2)
 	g3.BorderStyle.Fg = termui.ColorWhite
 	g3.LabelStyle = termui.NewStyle(termui.ColorWhite)
@@ -55,7 +55,7 @@ func App() {
 	g4 := widgets.NewGauge()
 	g4.Title = " CPU3 "
 	g4.Percent = int(status.CPULoad.CPU3)
-	g4.SetRect(0, 14, 50, 17)
+	g4.SetRect(0, 9, 50, 12)
 	g4.BarColor = GetColorPercent(status.CPULoad.CPU3)
 	g4.BorderStyle.Fg = termui.ColorWhite
 	g4.LabelStyle = termui.NewStyle(termui.ColorWhite)
@@ -64,7 +64,7 @@ func App() {
 	gMemUsage := widgets.NewGauge()
 	gMemUsage.Title = " Memory usage "
 	gMemUsage.Percent = int(status.Mem.MemUsage)
-	gMemUsage.SetRect(50, 5, 100, 8)
+	gMemUsage.SetRect(50, 0, 100, 3)
 	gMemUsage.BarColor = GetColorPercent(status.Mem.MemUsage)
 	gMemUsage.BorderStyle.Fg = termui.ColorWhite
 	gMemUsage.LabelStyle = termui.NewStyle(termui.ColorWhite)
@@ -72,7 +72,7 @@ func App() {
 	gSwapUsage := widgets.NewGauge()
 	gSwapUsage.Title = " Swap usage "
 	gSwapUsage.Percent = int(status.Mem.SwapUsage)
-	gSwapUsage.SetRect(50, 8, 100, 11)
+	gSwapUsage.SetRect(50, 3, 100, 6)
 	gSwapUsage.BarColor = GetColorPercent(status.Mem.SwapUsage)
 	gSwapUsage.BorderStyle.Fg = termui.ColorWhite
 	gSwapUsage.LabelStyle = termui.NewStyle(termui.ColorWhite)
@@ -87,7 +87,7 @@ func App() {
 		[]string{fmt.Sprintf("%.2f Gb", (float32(status.Mem.MemTotal)-float32(status.Mem.MemFree))/1000000), fmt.Sprintf("%.2f Gb", float32(status.Mem.MemFree)/1000000), fmt.Sprintf("%.2f Gb", float32(status.Mem.MemTotal)/1000000)},
 	}
 	tableMem.TextStyle = termui.NewStyle(termui.ColorWhite)
-	tableMem.SetRect(50, 11, 100, 15)
+	tableMem.SetRect(50, 6, 100, 10)
 
 	// CPU Frequency
 	var freqBuffer = make([]float64, 40)
@@ -96,7 +96,7 @@ func App() {
 	cpuFreqPlot := widgets.NewPlot()
 	cpuFreqPlot.Title = " CPU frequency GHz "
 	cpuFreqPlot.Data = [][]float64{freqBuffer}
-	cpuFreqPlot.SetRect(0, 17, 50, 28)
+	cpuFreqPlot.SetRect(0, 12, 50, 24)
 	cpuFreqPlot.AxesColor = termui.ColorWhite
 	cpuFreqPlot.LineColors[0] = termui.ColorCyan
 
@@ -111,7 +111,7 @@ func App() {
 		[]string{status.Disk.MountingPoint, status.Disk.Size, status.Disk.Used, status.Disk.Avail, status.Disk.PercentUse},
 	}
 	tableDisk.TextStyle = termui.NewStyle(termui.ColorWhite)
-	tableDisk.SetRect(50, 15, 100, 20)
+	tableDisk.SetRect(50, 10, 100, 15)
 
 	// Temperature
 	var tempBuffer = make([]float64, 40)
@@ -120,7 +120,7 @@ func App() {
 	tempPlot := widgets.NewPlot()
 	tempPlot.Title = " Temperature °C "
 	tempPlot.Data = [][]float64{tempBuffer}
-	tempPlot.SetRect(50, 20, 100, 28)
+	tempPlot.SetRect(50, 15, 100, 24)
 	tempPlot.AxesColor = termui.ColorWhite
 	tempPlot.LineColors[0] = termui.ColorCyan
 

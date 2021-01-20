@@ -1,7 +1,6 @@
-<center> <h1>pitop</h1> </center>
 
 <div align="center">
-
+<span style="color:blue">pitop</span>.
 Raspberry Pi 4 terminal based activity monitor.  
 
 <img src="./assets/pitop.gif" />

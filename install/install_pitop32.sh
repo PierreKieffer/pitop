@@ -1,4 +1,6 @@
 #!/bin/bash
-wget https://github.com/PierreKieffer/pitop/blob/master/bin/32/pitop
+curl https://github.com/PierreKieffer/pitop/blob/master/bin/32/pitop --output pitop
+
+chmod +x pitop
 sudo mv pitop /usr/local/bin
 

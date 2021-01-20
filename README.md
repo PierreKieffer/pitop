@@ -11,7 +11,7 @@ Raspberry Pi 4 terminal based activity monitor
 ## Install 
 ### 32 bits 
 ```bash 
-wget https://github.com/PierreKieffer/pitop/install/install_pitop.sh | sudo bash install_pitop.sh  
+wget https://github.com/PierreKieffer/pitop/blob/master/install/install_pitop.sh | chmod +x install_pitop.sh | sudo bash install_pitop.sh  
 ```
 ### 64 bits 
 

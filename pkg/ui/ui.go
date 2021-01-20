@@ -20,13 +20,6 @@ func App() {
 	//Init
 	status := worker.Worker()
 
-	//Header
-	// header := widgets.NewParagraph()
-	// header.Text = " PiTop "
-	// header.SetRect(0, 0, 100, 5)
-	// header.TextStyle.Fg = termui.ColorWhite
-	// header.BorderStyle.Fg = termui.ColorWhite
-
 	//CPU Load
 	g1 := widgets.NewGauge()
 	g1.Title = " CPU0 "
@@ -120,9 +113,29 @@ func App() {
 	tempPlot := widgets.NewPlot()
 	tempPlot.Title = " Temperature °C "
 	tempPlot.Data = [][]float64{tempBuffer}
-	tempPlot.SetRect(50, 15, 100, 24)
+	tempPlot.SetRect(0, 24, 50, 32)
 	tempPlot.AxesColor = termui.ColorWhite
 	tempPlot.LineColors[0] = termui.ColorCyan
+
+	// Network
+	var netRxBuffer = make([]float64, 45)
+	netRxBuffer[len(netRxBuffer)-1] = float64(status.Net.BytesRecv)
+	var netTxBuffer = make([]float64, 45)
+	netTxBuffer[len(netTxBuffer)-1] = float64(status.Net.BytesSent)
+
+	netRx := widgets.NewSparkline()
+	netRx.Title = fmt.Sprintf(" Rx:  %v B/s ", status.Net.BytesRecv)
+	netRx.Data = netRxBuffer
+	netRx.LineColor = termui.ColorRed
+
+	netTx := widgets.NewSparkline()
+	netTx.Title = fmt.Sprintf(" Tx:  %v B/s ", status.Net.BytesSent)
+	netTx.Data = netTxBuffer
+	netTx.LineColor = termui.ColorRed
+
+	netPlot := widgets.NewSparklineGroup(netRx, netTx)
+	netPlot.Title = " Network usage "
+	netPlot.SetRect(50, 15, 100, 32)
 
 	render := func() {
 		status = worker.Worker()
@@ -161,11 +174,19 @@ func App() {
 		tempBuffer = UpdateBuffer(tempBuffer, float64(status.Temp.T))
 		tempPlot.Data = [][]float64{tempBuffer}
 
-		termui.Render(g1, g2, g3, g4, gMemUsage, gSwapUsage, tableMem, cpuFreqPlot, tableDisk, tempPlot)
+		netRxBuffer = UpdateBuffer(netRxBuffer, float64(status.Net.BytesRecv))
+		netTxBuffer = UpdateBuffer(netTxBuffer, float64(status.Net.BytesSent))
+		netRx.Data = netRxBuffer
+		netTx.Data = netTxBuffer
+		netRx.Title = fmt.Sprintf(" Rx:  %v B/s ", status.Net.BytesRecv)
+		netTx.Title = fmt.Sprintf(" Tx:  %v B/s ", status.Net.BytesSent)
+
+		termui.Render(g1, g2, g3, g4, gMemUsage, gSwapUsage, tableMem, cpuFreqPlot, tableDisk, tempPlot, netPlot)
 	}
 
 	uiEvents := termui.PollEvents()
 	ticker := time.NewTicker(time.Second).C
+
 	for {
 		select {
 		case e := <-uiEvents:
@@ -179,8 +200,8 @@ func App() {
 	}
 }
 
-func UpdateBuffer(freqBuffer []float64, inputValue float64) []float64 {
-	history := freqBuffer[1:]
+func UpdateBuffer(inputBuffer []float64, inputValue float64) []float64 {
+	history := inputBuffer[1:]
 	updateBuffer := append(history, inputValue)
 	return updateBuffer
 }

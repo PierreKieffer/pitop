@@ -4,6 +4,7 @@ import (
 	"github.com/PierreKieffer/pitop/pkg/cpu"
 	"github.com/PierreKieffer/pitop/pkg/disk"
 	"github.com/PierreKieffer/pitop/pkg/mem"
+	"github.com/PierreKieffer/pitop/pkg/net"
 	"github.com/PierreKieffer/pitop/pkg/temp"
 	"sync"
 )
@@ -14,6 +15,7 @@ type Status struct {
 	Mem     *mem.MemStat
 	Temp    *temp.Temp
 	Disk    *disk.DiskInfo
+	Net     *net.NetStat
 }
 
 func Worker() *Status {
@@ -21,7 +23,7 @@ func Worker() *Status {
 	var status Status
 
 	var wg sync.WaitGroup
-	wg.Add(5)
+	wg.Add(6)
 
 	//CPU Load
 	go func() {
@@ -51,6 +53,12 @@ func Worker() *Status {
 	go func() {
 		defer wg.Done()
 		status.Disk = disk.ExtractDiskUsage()
+	}()
+
+	// Net
+	go func() {
+		defer wg.Done()
+		status.Net = net.ComputeNetStats()
 	}()
 	wg.Wait()
 

@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"fmt"
+	"github.com/PierreKieffer/pitop/pkg/disk"
 	"github.com/PierreKieffer/pitop/pkg/worker"
 	termui "github.com/gizak/termui/v3"
 	"github.com/gizak/termui/v3/widgets"
@@ -101,12 +102,9 @@ func App() {
 	tableDisk.RowSeparator = false
 	tableDisk.TextStyle = termui.Theme.Table.Text
 	tableDisk.TextAlignment = termui.AlignCenter
-	tableDisk.Rows = [][]string{
-		[]string{"Mount", "Size", "Used", "Free", "Usage"},
-		[]string{status.Disk.MountingPoint, status.Disk.Size, status.Disk.Used, status.Disk.Avail, status.Disk.PercentUse},
-	}
+	tableDisk.Rows = BuildTableDisk(status.Disk)
 	tableDisk.TextStyle = termui.NewStyle(termui.ColorWhite)
-	tableDisk.SetRect(50, 10, 100, 15)
+	tableDisk.SetRect(50, 10, 100, 17)
 
 	// Temperature
 	var tempBuffer = make([]float64, 40)
@@ -137,7 +135,7 @@ func App() {
 
 	netPlot := widgets.NewSparklineGroup(netRx, netTx)
 	netPlot.Title = " Network usage "
-	netPlot.SetRect(50, 15, 100, 32)
+	netPlot.SetRect(50, 17, 100, 32)
 
 	render := func() {
 		status = worker.Worker()
@@ -168,10 +166,7 @@ func App() {
 		freqBuffer = UpdateBuffer(freqBuffer, float64(status.CPUFreq.Freq)/1000)
 		cpuFreqPlot.Data = [][]float64{freqBuffer}
 
-		tableDisk.Rows = [][]string{
-			[]string{"Mount", "Size", "Used", "Free", "Usage"},
-			[]string{status.Disk.MountingPoint, status.Disk.Size, status.Disk.Used, status.Disk.Avail, status.Disk.PercentUse},
-		}
+		tableDisk.Rows = BuildTableDisk(status.Disk)
 
 		tempBuffer = UpdateBuffer(tempBuffer, float64(status.Temp.T))
 		tempPlot.Data = [][]float64{tempBuffer}
@@ -208,6 +203,19 @@ func UpdateBuffer(inputBuffer []float64, inputValue float64) []float64 {
 	history := inputBuffer[1:]
 	updateBuffer := append(history, inputValue)
 	return updateBuffer
+}
+
+func BuildTableDisk(disks *[]disk.DiskInfo) [][]string {
+	var diskRows [][]string
+	header := []string{"Mount", "Size", "Used", "Free", "Usage"}
+	diskRows = append(diskRows, header)
+
+	for _, disk := range *disks {
+		diskRow := []string{disk.MountingPoint, disk.Size, disk.Used, disk.Avail, disk.PercentUse}
+		diskRows = append(diskRows, diskRow)
+	}
+
+	return diskRows
 }
 
 func GetColorPercent(inputValue float32) termui.Color {

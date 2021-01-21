@@ -16,9 +16,9 @@ type DiskInfo struct {
 	PercentUse    string
 }
 
-func ExtractDiskUsage() *DiskInfo {
+func ExtractDiskUsage() *[]DiskInfo {
 
-	var diskInfo DiskInfo
+	var disks []DiskInfo
 
 	cmd := "df -h"
 	run := exec.Command("bash", "-c", cmd)
@@ -34,18 +34,21 @@ func ExtractDiskUsage() *DiskInfo {
 	for _, outputLine := range outputLines {
 		diskInfoSlice := utils.FormatStatSlice(strings.Split(outputLine, " "))
 		if len(diskInfoSlice) > 0 {
-			if diskInfoSlice[len(diskInfoSlice)-1] == "/" {
-				diskInfo.MountingPoint = "/"
+			if diskInfoSlice[0][:4] == "/dev" && diskInfoSlice[0][:9] != "/dev/loop" {
+
+				var diskInfo DiskInfo
+
+				diskInfo.MountingPoint = diskInfoSlice[len(diskInfoSlice)-1]
 				diskInfo.Size = diskInfoSlice[1]
 				diskInfo.Used = diskInfoSlice[2]
 				diskInfo.Avail = diskInfoSlice[3]
 				diskInfo.PercentUse = diskInfoSlice[4]
 
-				break
+				disks = append(disks, diskInfo)
 			}
 		}
 	}
 
-	return &diskInfo
+	return &disks
 
 }

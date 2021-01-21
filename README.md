@@ -8,6 +8,10 @@ Raspberry Pi 4 terminal based activity monitor
 
 </div>
 
+Yes I know there are plenty of solutions already available, but I wanted to develop my own terminal based activity monitor.
+This is for RPI 4, it should work on RPI 3 but I haven't tested it. 
+
+
 ## Install 
 ### 32 bits 
 ```bash 

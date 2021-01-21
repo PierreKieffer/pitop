@@ -18,6 +18,8 @@ func App() {
 	defer termui.Close()
 
 	//Init
+	fmt.Println("")
+	fmt.Println("    Loading ...    ")
 	status := worker.Worker()
 
 	//CPU Load
@@ -186,6 +188,8 @@ func App() {
 
 	uiEvents := termui.PollEvents()
 	ticker := time.NewTicker(time.Second).C
+
+	fmt.Print("\033[H\033[2J")
 
 	for {
 		select {

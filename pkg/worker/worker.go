@@ -14,7 +14,7 @@ type Status struct {
 	CPUFreq *cpu.CPUFreq
 	Mem     *mem.MemStat
 	Temp    *temp.Temp
-	Disk    *disk.DiskInfo
+	Disk    *[]disk.DiskInfo
 	Net     *net.NetStat
 }
 

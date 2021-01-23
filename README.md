@@ -18,16 +18,16 @@ This is for RPI 4, it should work on RPI 3 (Update : It works on RPI 3).
 
 **Note**: Prebuilt binaries, doesn't require Go
 
-### 32 bits 
+### 32-bit
 
-**Note**: Tested on Raspberry Pi OS 32bits
+**Note**: Tested on Raspberry Pi OS 32-bit
 
 ```bash 
 curl -sSL https://raw.githubusercontent.com/PierreKieffer/pitop/master/install/install_pitop32.sh | bash
 ```
-### 64 bits 
+### 64-bit
 
-**Note**: Tested on Ubuntu server 20.04 LTS 64bits for Raspberry Pi
+**Note**: Tested on Ubuntu server 20.04 LTS 64-bit for Raspberry Pi
 
 ```bash 
 curl -sSL https://raw.githubusercontent.com/PierreKieffer/pitop/master/install/install_pitop64.sh | bash

@@ -1,7 +1,7 @@
 # pitop 
 <div align="center">
 
-Raspberry Pi 4 terminal based activity monitor
+**Raspberry Pi terminal based activity monitor**
 
 
 <img src="./assets/pitop.gif" />

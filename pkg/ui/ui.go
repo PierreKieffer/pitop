@@ -182,7 +182,7 @@ func App() {
 	}
 
 	uiEvents := termui.PollEvents()
-	ticker := time.NewTicker(time.Second).C
+	ticker := time.NewTicker(1010 * time.Millisecond).C
 
 	fmt.Print("\033[H\033[2J")
 

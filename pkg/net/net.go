@@ -57,7 +57,7 @@ func ExtractNetStats(netStats *[]NetStat, statSlice []string) {
 
 func ComputeNetStats() *NetStat {
 	prevNetStats := GetNetStats()
-	time.Sleep(990 * time.Millisecond)
+	time.Sleep(time.Second)
 	netStats := GetNetStats()
 
 	if prevNetStats.TotalBytesRecv == 0 && prevNetStats.TotalBytesSent == 0 {

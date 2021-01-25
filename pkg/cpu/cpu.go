@@ -50,7 +50,7 @@ func ComputeCPULoad() *CPULoad {
 
 	// Extract stats
 	prevExtract := GetCoresStats()
-	time.Sleep(200 * time.Millisecond)
+	time.Sleep(time.Second)
 	extract := GetCoresStats()
 
 	// Compute Usage

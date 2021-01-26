@@ -21,7 +21,7 @@ func ExtractDiskUsage() *[]DiskInfo {
 	var disks []DiskInfo
 
 	cmd := "df -h"
-	run := exec.Command("bash", "-c", cmd)
+	run := exec.Command("sh", "-c", cmd)
 	stdout, err := run.Output()
 
 	if err != nil {

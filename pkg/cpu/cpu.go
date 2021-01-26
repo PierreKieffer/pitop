@@ -221,7 +221,7 @@ func ExtractCPUInfoFrequency() {
 func ExtractLSCPU() {
 
 	cmd := "lscpu | grep -i mhz"
-	run := exec.Command("bash", "-c", cmd)
+	run := exec.Command("sh", "-c", cmd)
 	stdout, err := run.Output()
 
 	if err != nil {

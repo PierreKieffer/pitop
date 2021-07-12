@@ -11,7 +11,7 @@
 
 ---
 
-Terminal based activity monitor in Go, for my Raspberry Pi.
+Terminal based activity monitor in Go, for Raspberry Pi.
 
 This is for RPI 4, it should work on RPI 3 (Update : It works on RPI 3). 
 

@@ -1,4 +1,4 @@
-package temp
+package core
 
 import (
 	"fmt"
@@ -8,12 +8,11 @@ import (
 	"strings"
 )
 
-type Temp struct {
+type Temperature struct {
 	T float32
 }
 
-func ExtractTemp() *Temp {
-	var temp Temp
+func (temperature *Temperature) ExtractTemp() {
 
 	tempBytes, err := ioutil.ReadFile("/sys/class/thermal/thermal_zone0/temp")
 	if err != nil {
@@ -23,7 +22,5 @@ func ExtractTemp() *Temp {
 
 	tempInfo, _ := strconv.ParseUint(strings.Split(string(tempBytes), "\n")[0], 10, 64)
 
-	temp.T = float32(tempInfo) / 1000
-
-	return &temp
+	temperature.T = float32(tempInfo) / 1000
 }

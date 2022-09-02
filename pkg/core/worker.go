@@ -1,4 +1,4 @@
-package Core
+package core
 
 import (
 	"sync"
@@ -58,5 +58,4 @@ func (status *Status) Worker() {
 		status.Network.ComputeNetworkStatus()
 	}()
 	wg.Wait()
-
 }

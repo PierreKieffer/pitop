@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/PierreKieffer/pitop/pkg/utils"
 )
 
 type NetworkStatus struct {
@@ -48,7 +50,7 @@ func GetNetworkStatus() *NetworkStatus {
 	dataSlice := strings.Split(string(netStatBytes), "\n")
 
 	for _, statLine := range dataSlice[2:] {
-		statSlice := FormatStatSlice(strings.Split(statLine, " "))
+		statSlice := utils.FormatStatSlice(strings.Split(statLine, " "))
 		if len(statSlice) > 1 && statSlice[0] != "" {
 			var networkStatus NetworkStatus
 			networkStatus.TotalBytesRecv, _ = strconv.ParseUint(statSlice[1], 10, 64)

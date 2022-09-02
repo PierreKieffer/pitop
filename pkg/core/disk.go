@@ -21,7 +21,7 @@ type Disk struct {
 	MountingPoints []MountingPoint
 }
 
-func (disk *disk) ExtractDiskUsage() {
+func (disk *Disk) ExtractDiskUsage() {
 
 	cmd := "df -h"
 	run := exec.Command("bash", "-c", cmd)

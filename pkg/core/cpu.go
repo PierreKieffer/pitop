@@ -137,7 +137,7 @@ func (cpu *CPU) Frequency() {
 	cpu.cpuMu.Lock()
 	defer cpu.cpuMu.Unlock()
 
-	cpu.Frequency = avgFreq
+	cpu.Freq = avgFreq
 }
 
 func ExtractCPUInfo() *CPUInfo {

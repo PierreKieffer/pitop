@@ -101,6 +101,7 @@ func (cpu *CPU) Load() {
 		defer wg.Done()
 		cpu.CPU3 = ComputeCoreLoad(extract.cpu3, prevExtract.cpu3)
 	}()
+
 	wg.Wait()
 
 }

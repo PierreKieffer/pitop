@@ -23,6 +23,8 @@ type Disk struct {
 
 func (disk *Disk) ExtractDiskUsage() {
 
+	disk.MountingPoints = []MountingPoint{}
+
 	cmd := "df -h"
 	run := exec.Command("bash", "-c", cmd)
 	stdout, err := run.Output()

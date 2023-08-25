@@ -19,7 +19,7 @@ type CPU struct {
 	Freq int // CPU total average frequency
 
 	// CPU Load on each core
-	CPU  float32 // total % Load
+	CPU  float32 // total % Load : NOTE : Do we need it ?
 	CPU0 float32
 	CPU1 float32
 	CPU2 float32
@@ -31,7 +31,7 @@ type CPUInfo struct {
 		Complete description of the CPU (all cores) at a specific time
 	*/
 
-	cpu  *CoreInfo // total
+	cpu  *CoreInfo // total NOTE : Do we need it ?
 	cpu0 *CoreInfo
 	cpu1 *CoreInfo
 	cpu2 *CoreInfo
@@ -114,10 +114,10 @@ func (cpu *CPU) Frequency() {
 		panic(err)
 	}
 
-	cpuFrequencies := []string{}
+	cpuFrequencies := []string{} // TODO : Check the len, to init with prealocated cap
 	dataSlice := strings.Split(string(cpuInfoBytes), "\n")
-	for _, infoLine := range dataSlice {
-		cpuData := strings.Split(infoLine, " ")
+	for i := range dataSlice {
+		cpuData := strings.Split(dataSlice[i], " ")
 
 		if len(cpuData) > 1 && cpuData[0] != "" && cpuData[0] == "cpu" && cpuData[1][:3] == "MHz" {
 			cpuFrequencies = append(cpuFrequencies, cpuData[2])
@@ -126,13 +126,13 @@ func (cpu *CPU) Frequency() {
 
 	var freqSum int = 0
 
-	for _, freqStr := range cpuFrequencies {
-		freq, _ := strconv.ParseFloat(freqStr, 32)
+	for i := range cpuFrequencies {
+		freq, _ := strconv.ParseFloat(cpuFrequencies[i], 32)
 		freqSum += int(freq)
 	}
 	avgFreq := freqSum / len(cpuFrequencies)
 
-	cpu.cpuMu.Lock()
+	cpu.cpuMu.Lock() // NOTE : Why ?
 	defer cpu.cpuMu.Unlock()
 
 	cpu.Freq = avgFreq

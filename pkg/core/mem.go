@@ -1,9 +1,7 @@
 package core
 
 import (
-	"fmt"
 	"io/ioutil"
-	"os"
 	"strconv"
 	"strings"
 	"sync"
@@ -32,8 +30,7 @@ func (memoryInfo *Memory) Usage() {
 
 	memInfoBytes, err := ioutil.ReadFile("/proc/meminfo")
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		panic(err)
 	}
 
 	dataSlice := strings.Split(string(memInfoBytes), "\n")

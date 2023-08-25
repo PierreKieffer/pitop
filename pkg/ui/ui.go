@@ -1,7 +1,6 @@
 package ui
 
 import (
-	"log"
 	"time"
 
 	"fmt"
@@ -14,13 +13,12 @@ import (
 func App() {
 
 	if err := termui.Init(); err != nil {
-		log.Fatalf("failed to initialize termui: %v", err)
+		panic(err)
 	}
 	defer termui.Close()
 
 	//Init
-	fmt.Println("")
-	fmt.Println("    Loading ...    ")
+	println("\n    Loading ...    ")
 	var status = &core.Status{
 		CPU:         &core.CPU{},
 		Memory:      &core.Memory{},

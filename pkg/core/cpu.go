@@ -1,9 +1,7 @@
 package core
 
 import (
-	"fmt"
 	"io/ioutil"
-	"os"
 	"strconv"
 	"strings"
 	"sync"
@@ -113,8 +111,7 @@ func (cpu *CPU) Frequency() {
 
 	cpuInfoBytes, err := ioutil.ReadFile("/proc/cpuinfo")
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		panic(err)
 	}
 
 	cpuFrequencies := []string{}
@@ -150,8 +147,7 @@ func ExtractCPUInfo() *CPUInfo {
 
 	procStatBytes, err := ioutil.ReadFile("/proc/stat")
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		panic(err)
 	}
 
 	dataSlice := strings.Split(string(procStatBytes), "\n")

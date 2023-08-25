@@ -1,8 +1,6 @@
 package core
 
 import (
-	"fmt"
-	"os"
 	"os/exec"
 	"strings"
 
@@ -30,8 +28,7 @@ func (disk *Disk) ExtractDiskUsage() {
 	stdout, err := run.Output()
 
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		panic(err)
 	}
 
 	outputLines := strings.Split(string(stdout), "\n")

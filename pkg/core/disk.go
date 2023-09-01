@@ -21,7 +21,7 @@ type Disk struct {
 
 func (disk *Disk) ExtractDiskUsage() {
 
-	disk.MountingPoints = []MountingPoint{}
+	disk.MountingPoints = []MountingPoint{} // TODO : Can we preallocate here ?
 
 	cmd := "df -h"
 	run := exec.Command("bash", "-c", cmd)
@@ -33,8 +33,8 @@ func (disk *Disk) ExtractDiskUsage() {
 
 	outputLines := strings.Split(string(stdout), "\n")
 
-	for _, outputLine := range outputLines {
-		mountingPointInfoSlice := utils.FormatStatSlice(strings.Split(outputLine, " "))
+	for i := range outputLines {
+		mountingPointInfoSlice := utils.FormatStatSlice(strings.Split(outputLines[i], " "))
 		if len(mountingPointInfoSlice) > 0 {
 			if mountingPointInfoSlice[0][:4] == "/dev" && mountingPointInfoSlice[0][:9] != "/dev/loop" {
 

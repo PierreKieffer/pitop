@@ -132,7 +132,7 @@ func (cpu *CPU) Frequency() {
 	}
 	avgFreq := freqSum / len(cpuFrequencies)
 
-	cpu.cpuMu.Lock() // NOTE : Why ?
+	cpu.cpuMu.Lock()
 	defer cpu.cpuMu.Unlock()
 
 	cpu.Freq = avgFreq

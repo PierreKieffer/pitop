@@ -1,10 +1,10 @@
 package utils
 
 func FormatStatSlice(rawStatSlice []string) []string {
-	var statSlice []string
-	for _, stat := range rawStatSlice {
-		if stat != "" {
-			statSlice = append(statSlice, stat)
+	var statSlice = make([]string, 0, len(rawStatSlice))
+	for i := range rawStatSlice {
+		if rawStatSlice[i] != "" {
+			statSlice = append(statSlice, rawStatSlice[i])
 		}
 	}
 	return statSlice

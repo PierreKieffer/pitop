@@ -37,7 +37,7 @@ func (networkStatus *NetworkStatus) ComputeNetworkStatus() {
 
 func GetNetworkStatus() *NetworkStatus {
 
-	var netStats []NetworkStatus
+	var netStats []NetworkStatus // TODO : Can we do preallocation here ?
 
 	netStatBytes, err := ioutil.ReadFile("/proc/net/dev")
 	if err != nil {

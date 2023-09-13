@@ -168,6 +168,7 @@ func App() {
 			[]string{fmt.Sprintf("%.2f Gb", (float32(status.Memory.MemTotal)-float32(status.Memory.MemFree))/1000000), fmt.Sprintf("%.2f Gb", float32(status.Memory.MemFree)/1000000), fmt.Sprintf("%.2f Gb", float32(status.Memory.MemTotal)/1000000)},
 		}
 
+		// TODO : Can we use a sync pool for []float64 buffers ? as it's used everywhere
 		freqBuffer = UpdateBuffer(freqBuffer, float64(status.CPU.Freq)/1000)
 		cpuFreqPlot.Data = [][]float64{freqBuffer}
 
@@ -204,14 +205,16 @@ func App() {
 	}
 }
 
+// TODO : Improve this (pop) method to update buffer ?
 func UpdateBuffer(inputBuffer []float64, inputValue float64) []float64 {
 	history := inputBuffer[1:]
 	updateBuffer := append(history, inputValue)
 	return updateBuffer
 }
 
+// TODO : Improve this method ?
 func BuildTableDisk(mountingPoints []core.MountingPoint) [][]string {
-	var diskRows [][]string
+	var diskRows [][]string // TODO : pre allocation here ?
 	header := []string{"Mount", "Size", "Used", "Free", "Usage"}
 	diskRows = append(diskRows, header)
 

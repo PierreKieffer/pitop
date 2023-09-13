@@ -19,7 +19,6 @@ type CPU struct {
 	Freq int // CPU total average frequency
 
 	// CPU Load on each core
-	CPU  float32 // total % Load : NOTE : Do we need it ?
 	CPU0 float32
 	CPU1 float32
 	CPU2 float32
@@ -31,7 +30,6 @@ type CPUInfo struct {
 		Complete description of the CPU (all cores) at a specific time
 	*/
 
-	cpu  *CoreInfo // total NOTE : Do we need it ?
 	cpu0 *CoreInfo
 	cpu1 *CoreInfo
 	cpu2 *CoreInfo
@@ -59,27 +57,23 @@ type CoreInfo struct {
 func (cpu *CPU) Load() {
 
 	// Extract stats
-	prevExtract := ExtractCPUInfo()
+	prevExtract := ExtractCPUInfo() // Return a CPUInfo (with CoreInfo)
 	time.Sleep(time.Second)
-	extract := ExtractCPUInfo()
+	extract := ExtractCPUInfo() // Return a CPUInfo (with CoreInfo)
+
+	// NOTE TODO : Here could be interesting to use a sync.Pool for CoreInfo struct ?
+	// As it is used only to add data to *CPU
 
 	var wg sync.WaitGroup
-	wg.Add(5)
+	wg.Add(4)
 
 	cpu.cpuMu.Lock()
 	defer cpu.cpuMu.Unlock()
 
-	// cpu
-	go func() {
-		defer wg.Done()
-		cpu.CPU = ComputeCoreLoad(extract.cpu, prevExtract.cpu)
-
-	}()
-
 	// cpu0
 	go func() {
 		defer wg.Done()
-		cpu.CPU0 = ComputeCoreLoad(extract.cpu0, prevExtract.cpu0)
+		cpu.CPU0 = ComputeCoreLoad(extract.cpu0, prevExtract.cpu0) // return float32
 	}()
 
 	// cpu1
@@ -171,8 +165,6 @@ func ExtractCPUInfo() *CPUInfo {
 				coreInfo.GuestNice, _ = strconv.ParseUint(statSlice[10], 10, 64)
 
 				switch statSlice[0] {
-				case "cpu":
-					cpuInfo.cpu = &coreInfo
 				case "cpu0":
 					cpuInfo.cpu0 = &coreInfo
 				case "cpu1":

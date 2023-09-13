@@ -7,6 +7,8 @@ import (
 type Status struct {
 	statusMu sync.Mutex
 
+	p *Platform
+
 	CPU         *CPU
 	Memory      *Memory
 	Temperature *Temperature

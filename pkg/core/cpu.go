@@ -103,6 +103,10 @@ func (cpu *CPU) Frequency() {
 		Compute average frequency in MHz
 	*/
 
+	// TODO : Depending on the platform, the extraction of the cpu frequency is different :
+	// - Debian 10 buster : /proc/cpuinfo
+	// - Debian 11 bullseye /sys/devices/system/cpu/cpu[i]/cpufreq/cpuinfo_cur_freq
+
 	cpuInfoBytes, err := ioutil.ReadFile("/proc/cpuinfo")
 	if err != nil {
 		panic(err)
